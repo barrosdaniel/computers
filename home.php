@@ -20,7 +20,7 @@
         $username = $_SESSION['valid_user'];
         echo "<h4>Welcome, $username<h4>";
         echo "<h2>Your options:</h2>";
-        echo '<a href="">View All Jobs</a><br>';
+        echo '<a href="all_jobs.php">View All Jobs</a><br>';
         echo '<a href="">Add a Job</a><br>';
         include "footer_logged_in.php";
     } else {
