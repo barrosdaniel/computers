@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System</title>
+    <title>Job Lodgement System | Home</title>
 </head>
 
 <body>
@@ -17,16 +17,13 @@
     $validLogin = require "check_login.php";
 
     if ($validLogin || $validSession) {
-        $name = $_SESSION['valid_user'];
-        echo "<h5>Welcome, $name<h5><br><br>";
+        $username = $_SESSION['valid_user'];
+        echo "<h4>Welcome, $username<h4>";
         echo "<h2>Your options:</h2>";
         echo '<a href="">View All Jobs</a><br>';
         echo '<a href="">Add a Job</a><br>';
         include "footer_logged_in.php";
     } else {
-        if (isset($name)) {
-            echo "Could not log you in.<br>";
-        }
         echo "You are not logged in<br>";
         echo "<h2>Your options:</h2>";
         echo '<a href="">Add a Job</a><br>';

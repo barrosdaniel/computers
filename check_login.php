@@ -1,25 +1,25 @@
 <?php
-if (isset($_POST['name']) || isset($_POST['password'])) {
-    if (!isset($_POST['name']) || empty($_POST['name'])) {
-        echo "Name not supplied";
+if (isset($_POST['username']) || isset($_POST['password'])) {
+    if (!isset($_POST['username']) || empty($_POST['username'])) {
+        echo '<p style="color: red;">Username not supplied.</p>';
         return false;
     }
 
     if (!isset($_POST['password']) || empty($_POST['password'])) {
-        echo "Password not supplied";
+        echo '<p style="color: red;">Password not supplied.</p>';
         return false;
     }
 
     require "db_connection.php";
-    $name = $_POST['name'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
 
     $query = "SELECT count(*) 
               FROM authorized_users 
-              WHERE name = ? AND password = sha1(?)";
+              WHERE username = ? AND password = sha1(?)";
 
     $statement = $db->prepare($query);
-    $statement->bind_param("ss", $name, $password);
+    $statement->bind_param("ss", $username, $password);
     $statement->execute();
 
     $result = $statement->get_result();
@@ -33,11 +33,11 @@ if (isset($_POST['name']) || isset($_POST['password'])) {
 
     $row = $result->fetch_row();
     if ($row[0] > 0) {
-        $_SESSION['valid_user'] = $name;
+        $_SESSION['valid_user'] = $username;
         $db->close();
         return true;
     } else {
-        echo "Username and password incorrect.<br>";
+        echo '<p style="color: red;">Username and password incorrect.</p>';
         $db->close();
         return false;
     }
