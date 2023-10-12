@@ -105,17 +105,17 @@
                         <form action="$actionPage" method="GET">
                             <input type="hidden" name="$hiddenName" value="$hiddenValue">
                             <input type="submit" value="$buttonText">
-                        </form>
-                    </td>
+                            </form>
+                            </td>
                 END;
             }
             ?>
-
         </tbody>
     </table>
 
-
-
+    <?php
+    include "footer_logged_in.php";
+    ?>
 </body>
 
 </html>
