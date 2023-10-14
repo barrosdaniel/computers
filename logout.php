@@ -9,15 +9,18 @@
 
 <body>
     <?php
+    // Session control
     session_start();
     $validSession = require "check_session.php";
 
+    // If user is logged in, log them out
     if ($validSession) {
         $oldUser = $_SESSION['valid_user'];
         unset($_SESSION['valid_user']);
         session_destroy();
     }
 
+    // Display logout message
     if (!empty($oldUser)) {
         echo "Logged out<br>";
     } else {
