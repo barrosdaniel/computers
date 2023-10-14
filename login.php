@@ -13,8 +13,8 @@
     <?php
     echo <<<END
         <form action="home.php" method="POST">
-            <p>Username: <input type="text" name="username"></p>
-            <p>Password: <input type="password" name="password"></p>
+            <p>Username: <input type="text" name="username" maxlength="16"></p>
+            <p>Password: <input type="password" name="password" maxlength="16"></p>
             <p><input type="submit" name="submit" value="Log In"></p>
         </form>
     END;
