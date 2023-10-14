@@ -4,16 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        textarea {
-            font-family: inherit;
-        }
-    </style>
-    <title>Job Lodgement System | Edit Job</title>
+    <title>Job Lodgement System | Delete Job</title>
 </head>
 
 <body>
-    <h1>Edit Job</h1>
+    <h1>Delete Job</h1>
 
     <?php
     // Session control
@@ -49,41 +44,11 @@
             exit;
         }
 
-        // Form input validation
-        if (!isset($_POST['name']) || empty($_POST['name'])) {
-            echo "ERROR: Name not supplied.";
-            $db->close();
-            exit;
-        }
-        if (!isset($_POST['email']) || empty($_POST['email'])) {
-            echo "ERROR: Email not supplied.";
-            $db->close();
-            exit;
-        }
-        if (!isset($_POST['severity']) || empty($_POST['severity'])) {
-            echo "ERROR: Severity not supplied.";
-            $db->close();
-            exit;
-        }
-        if (!isset($_POST['description']) || empty($_POST['description'])) {
-            echo "ERROR: Problem description not supplied.";
-            $db->close();
-            exit;
-        }
-
-        // Get form values
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $severity = $_POST['severity'];
-        $description = $_POST['description'];
-
-        // Update Database record
-        $query = "UPDATE jobs 
-                  SET customer_name = ?, email = ?, severity = ?, description 
-                    = ?
+        // Delete Database record
+        $query = "DELETE FROM jobs 
                   WHERE id = ?";
         $statement = $db->prepare($query);
-        $statement->bind_param("ssisi", $name, $email, $severity, $description, $id);
+        $statement->bind_param("i", $id);
         $statement->execute();
         $affectedRows = $statement->affected_rows;
         $statement->close();
@@ -91,11 +56,11 @@
 
         // Display message to user
         if ($affectedRows == 1) {
-            echo "Job updated successfully.<br><br>";
+            echo "Job deleted successfully.<br><br>";
             echo "<a href='all_jobs.php'>Back to List of Jobs</a>";
             echo "<br>";
         } else {
-            echo "ERROR: Could not update job.<br><br>";
+            echo "ERROR: Could not delete job.<br><br>";
             echo "<a href='all_jobs.php'>Back to List of Jobs</a><br>";
             echo "<br>";
         }
@@ -116,53 +81,40 @@
         $severity = $rowJobDetails['severity'];
         $description = $rowJobDetails['description'];
 
-
-        // Display form
+        // Display job details
         echo <<<END
         <form action="" method="POST">
         <table>
             <tr>
-                <td>Name:</td>
-                <td><input type="text" name="name" maxlength="32" value="$name"></td>
+                <td>Customer Name:</td>
+                <td>$name</td>
             </tr>
             <tr>
-                <td>Email:</td>
-                <td><input type="email" name="email" maxlength="64" value="$email"></td>
+                <td>Customer Email:</td>
+                <td>$email</td>
             </tr>
             <tr>
                 <td>Severity:</td>
-                <td>
-                    <select name="severity" id="severity">
         END;
-        if ($severity == 3) {
-            echo '<option value="3" selected>Low</option>';
-        } else {
-            echo '<option value="3">Low</option>';
-        }
-        if ($severity == 2) {
-            echo '<option value="2" selected>Medium</option>';
-        } else {
-            echo '<option value="2">Medium</option>';
-        }
         if ($severity == 1) {
-            echo '<option value="1" selected>High</option>';
+            echo "<td>High</td>";
+        } else if ($severity == 2) {
+            echo "<td>Medium</td>";
         } else {
-            echo '<option value="1">High</option>';
+            echo "<td>Low</td>";
         }
         echo <<<END
-                    </select>
-                </td>
             </tr>
             <tr>
-                <td>Problem Description:</td>
-                <td><textarea name="description" id="description" cols="60" rows="12"
-                    maxlength="128">$description</textarea></td>
+                <td>Description:</td>
+                <td>$description</td>
             </tr>
         </table>
         </br>
-        <input type="submit" name="submit" value="Update">
+        <input type="hidden" name="id" value="$id">
+        <input type="submit" name="submit" value="Delete">
         <input type="submit" name="submit" value="Cancel">
-        <br><br>
+        </form>
         END;
 
         $resultJobDetails->free();
