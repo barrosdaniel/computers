@@ -36,6 +36,15 @@
     </form>
 
     <?php
+    session_start();
+    $validLogin = require "check_login.php";
+    $validSession = require "check_session.php";
+
+    if (!$validLogin && !$validSession) {
+        header("Location: login.php");
+        exit;
+    }
+
     require "db_connection.php";
 
     $query = "SELECT * 

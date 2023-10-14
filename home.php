@@ -21,12 +21,12 @@
         echo "<h4>Welcome, $username<h4>";
         echo "<h2>Your options:</h2>";
         echo '<a href="all_jobs.php">View All Jobs</a><br>';
-        echo '<a href="">Add a Job</a><br>';
+        echo '<a href="add.php">Add a Job</a><br>';
         include "footer_logged_in.php";
     } else {
         echo "You are not logged in<br>";
         echo "<h2>Your options:</h2>";
-        echo '<a href="">Add a Job</a><br>';
+        echo '<a href="add.php">Add a Job</a><br>';
         include "footer_logged_out.php";
     }
     ?>

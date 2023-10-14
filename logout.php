@@ -19,7 +19,7 @@
     }
 
     if (!empty($oldUser)) {
-        echo "Logged out.<br>";
+        echo "Logged out<br>";
     } else {
         echo "You were not logged in.<br><br>";
     }
