@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        textarea {
+            font-family: inherit;
+        }
+    </style>
     <title>Job Lodgement System | Add Job</title>
 </head>
 
@@ -50,7 +55,7 @@
             $db->close();
             exit;
         }
-        if (!isset($_POST['problem']) || empty($_POST['problem'])) {
+        if (!isset($_POST['description']) || empty($_POST['description'])) {
             echo "ERROR: Problem description not supplied.";
             $db->close();
             exit;
@@ -60,21 +65,21 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
         $severity = $_POST['severity'];
-        $problem = $_POST['problem'];
+        $description = $_POST['description'];
 
         // Insert into Database
         $query = "INSERT INTO jobs 
                       (customer_name, email, severity, description) 
                       VALUES (?, ?, ?, ?)";
         $statement = $db->prepare($query);
-        $statement->bind_param("ssis", $name, $email, $severity, $problem);
+        $statement->bind_param("ssis", $name, $email, $severity, $description);
         $statement->execute();
         $affectedRows = $statement->affected_rows;
         $statement->close();
         $db->close();
 
         // Display message to user
-        if ($affectedRows > 0) {
+        if ($affectedRows == 1) {
             echo "Job added successfully.<br><br>";
             echo "<a href='all_jobs.php'>Back to List of Jobs</a>";
             echo "<br>";
@@ -108,7 +113,7 @@
             </tr>
             <tr>
                 <td>Problem Description:</td>
-                <td><textarea name="problem" id="problem" cols="60" rows="12" maxlength="128"></textarea></td>
+                <td><textarea name="description" id="description" cols="60" rows="12" maxlength="128"></textarea></td>
             </tr>
         </table>
         </br>
